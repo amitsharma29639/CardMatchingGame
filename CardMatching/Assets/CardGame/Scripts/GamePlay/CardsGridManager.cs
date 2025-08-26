@@ -10,8 +10,10 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner
     private float hSpacing = 1.5f;
     private float vSpacing = 2f;
     private CardsManager cardsManager;
-
     private GameResultEvaluator gameResultEvaluator;
+    private ScoreManager scoreManager;
+    private TurnsManager turnsManager;
+    
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SpriteAtlas spriteAtlas;
 
@@ -28,6 +30,8 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner
         gameResultEvaluator = new GameResultEvaluator(cardsManager.GetCards());
         gameResultEvaluator.AddListener(this);
         gameResultEvaluator.AddListener(cardsManager);
+        scoreManager = new ScoreManager();
+        turnsManager = new TurnsManager();
     }
 
     private void CreateGrid(int rows, int cols)
@@ -59,12 +63,13 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner
 
     public void OnMatchFound(Card firstCard, Card secondCard)
     {
-
+       scoreManager.AddScore(1);
+       turnsManager.IncreamentTurnCount();
     }
 
     public void OnNoMatch(Card firstCard, Card secondCard)
     {
-
+        turnsManager.IncreamentTurnCount();
     }
 
     public void OnGameFinished()
@@ -76,6 +81,8 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner
     {
         gameResultEvaluator.OnDisable();
         cardsManager.OnDisable();
+        scoreManager.OnDisable();
+        turnsManager.OnDisable();
     }
 
     
