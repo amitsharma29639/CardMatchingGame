@@ -7,27 +7,44 @@ using UnityEngine;
 
 public class SaveAndLoadGameData 
 {
-    private int rows, cols;
+    private GameConfig gameConfig;
     private CardsManager cardsManager;
     private ScoreManager scoreManager;
     private TurnsManager turnsManager;
     private GameState gameState;
+    private GameResultEvaluator evaluator;
 
     private string path;
 
-    public SaveAndLoadGameData(int rows, int cols , CardsManager cardsManager , ScoreManager scoreManager, TurnsManager turnsManager)
+    public SaveAndLoadGameData(GameConfig gameConfig , CardsManager cardsManager , ScoreManager scoreManager, TurnsManager turnsManager , GameResultEvaluator evaluator)
     {
-        this.rows = rows;
-        this.cols = cols;
+        path = Application.persistentDataPath + "/SaveGameData.json";
+        
+        this.gameConfig = gameConfig;
         this.cardsManager = cardsManager;
         this.scoreManager = scoreManager;
         this.turnsManager = turnsManager;
+        this.evaluator = evaluator;
         
-        gameState = new GameState(rows, cols);
-        
-        path = Application.persistentDataPath + "/SaveGameData.json";
+        gameState = new GameState(gameConfig.Rows, gameConfig.Cols);
+
+        if (gameConfig.LoadSavedGame)
+        {
+            ConfigureSavedData();
+        }
         Debug.Log(path);
     }
+
+    private void ConfigureSavedData()
+    {
+        gameState = Load();
+        scoreManager.SetScore(gameState.score);
+        turnsManager.SetTurns(gameState.turns);
+        gameConfig.Rows = gameState.gridData.row;
+        gameConfig.Cols = gameState.gridData.col;
+        cardsManager.InstantiateFromSavedData(gameState.gridData.cardsData , evaluator);
+    }
+
     public void Save()
     {
         List<CardStateData> cardsData = new List<CardStateData>();
@@ -37,7 +54,7 @@ public class SaveAndLoadGameData
             Card card = cardObj.GetComponent<Card>();
             CardData cardData = card.GetCardData();
             CardStateData data = new CardStateData(cardData.id, cardData.suit, cardData.rank, 
-                card.gameObject.activeSelf, card.CurrentFace);
+                !cardObj.activeSelf, card.CurrentFace);
             cardsData.Add(data);
         }
         
@@ -56,7 +73,6 @@ public class SaveAndLoadGameData
     public GameState Load()
     {
        string jsonData = File.ReadAllText(path);
-       gameState = JsonUtility.FromJson<GameState>(jsonData);
-       return gameState;
+       return JsonUtility.FromJson<GameState>(jsonData);
     }
 }

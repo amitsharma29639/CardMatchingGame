@@ -8,21 +8,20 @@ using UnityEngine.UIElements;
 public class CardsManager : IGameResultListner
 {
     private List<GameObject> cards;
+    private Transform cardsParent;
     private SpriteAtlas spriteAtlas;
 
     private GameObject cardPrefab;
 
-  //  private List<ClickableObject> clickables;
     public CardsManager(GameObject cardPrefab, Transform parent, int cardsCount, SpriteAtlas spriteAtlas)
     {
         this.cardPrefab = cardPrefab;
+        this.cardsParent = parent;
         this.spriteAtlas = spriteAtlas;
         cards = new List<GameObject>();
-       // clickables = new List<ClickableObject>();
         List<CardData> cardsData = GenerateUniqueRandomCards();
         List<CardData> gridCards = ShuffleCardsData(cardsData.GetRange(0, cardsCount));
         InstantiateCardObjects(cardPrefab, parent, gridCards);
-
     }
 
     public List<GameObject> GetCards()
@@ -49,8 +48,7 @@ public class CardsManager : IGameResultListner
         }
         return deck;
     }
-
-    private void InstantiateCardObjects(GameObject cardPrefab, Transform parent, List<CardData> cardsData)
+    private void InstantiateCardObjects(GameObject cardPrefab, Transform parent, List<CardData> cardsData )
     {
         foreach (var cardData in cardsData)
         {
@@ -60,6 +58,34 @@ public class CardsManager : IGameResultListner
             cards.Add(cardObj);
         }
         
+    }
+
+    public void InstantiateFromSavedData(List<CardStateData> cardsStateData, GameResultEvaluator evaluator)
+    {
+        DestroyAllCards();
+    
+        foreach (CardStateData cardState in cardsStateData)
+        {
+            GameObject cardObj = GameObject.Instantiate(cardPrefab, cardsParent);
+            Card card = cardObj.GetComponent<Card>();
+            CardData cardData = new CardData(cardState.id, cardState.suit , cardState.rank, spriteAtlas);
+            card.Init(cardData);
+            cards.Add(cardObj);
+            cardObj.SetActive(!cardState.isMatched);
+            card.CurrentFace = cardState.cardFace;
+            
+        }
+        
+        evaluator.Init();
+        
+        foreach (GameObject cardObj in cards)
+        {
+            Card card = cardObj.GetComponent<Card>();
+            if (card.CurrentFace == CardFace.frontFace)
+            {
+                card.SetCardFrontFacing();
+            }
+        }
     }
 
     private List<CardData> ShuffleCardsData(List<CardData> deck)
@@ -95,6 +121,16 @@ public class CardsManager : IGameResultListner
     public void OnGameFinished()
     {
         Debug.Log("Game Finished! All matches found.");
+    }
+
+    private void DestroyAllCards()
+    {
+        foreach (var gameObject in cards)
+        {
+            GameObject.Destroy(gameObject);
+        }
+        cards.Clear();
+        
     }
 
     public void OnDisable()

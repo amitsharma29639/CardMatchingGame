@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class GameResultEvaluator : ICardEventsListner
 {
-    //private Card firstRevealedCard;
-   // private Card secondRevealedCard;
     private List<GameObject> cards;
     private List<IGameResultListner> listeners;
     private Queue<Card> queue;
@@ -15,15 +13,21 @@ public class GameResultEvaluator : ICardEventsListner
     {
         this.cards = cards;
 
+        listeners = new List<IGameResultListner>();
+        queue = new Queue<Card>();
+        
+        Init();
+
+    }
+
+    public void Init()
+    {
         foreach (var cardObj in cards)
         {
             Card card = cardObj.GetComponent<Card>();
             card.AddListener(this);
         }
-
-        listeners = new List<IGameResultListner>();
-        queue = new Queue<Card>();
-
+        
     }
 
     public void AddListener(IGameResultListner listener)
@@ -44,18 +48,6 @@ public class GameResultEvaluator : ICardEventsListner
 
     private void OnCardRevealed(Card card)
     {
-       /* queue.Enqueue(card);
-        if (firstRevealedCard == null && card.CurrentFace == CardFace.frontFace)
-        {
-            firstRevealedCard = card;
-        }
-        else if (secondRevealedCard == null && card.CurrentFace == CardFace.frontFace)
-        {
-            secondRevealedCard = card;
-            NotifyResultEvaluationStarted(firstRevealedCard, secondRevealedCard);
-            EvaluateRevealedCards();
-        }*/
-        
         if (card.CurrentFace == CardFace.frontFace)
         {
             queue.Enqueue(card);

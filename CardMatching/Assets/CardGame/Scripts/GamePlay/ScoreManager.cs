@@ -11,7 +11,7 @@ public class ScoreManager
 
    public ScoreManager(int score)
    {
-       this.score = score;
+       SetScore(0);
    }
    
    public int Score => score;
@@ -21,6 +21,12 @@ public class ScoreManager
        score += amount;
        OnScoreChanged(score);
        Debug.Log("score : "+score);
+   }
+
+   public void SetScore(int score)
+   {
+       this.score = score;
+       OnScoreChanged(score);
    }
 
    public void OnDisable()

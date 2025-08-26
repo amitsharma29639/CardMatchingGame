@@ -22,7 +22,11 @@ namespace CardGame.GamePlay
 
         private CardFace currentFace;
 
-        public CardFace CurrentFace => currentFace;
+        public CardFace CurrentFace
+        {
+            get => currentFace;
+            set => currentFace = value;
+        }
 
         public ClickableObject clickable;
 
@@ -43,6 +47,7 @@ namespace CardGame.GamePlay
             frontFace.sprite = data.Sprite;
             currentFace = CardFace.backFace;
             transform.localEulerAngles = faceDownRotation;
+           
         }
 
         public void AddListener(ICardEventsListner listener)
@@ -75,6 +80,8 @@ namespace CardGame.GamePlay
             }
         }
 
+       
+
         public void FlipCard()
         {
             clickable.enabled = false;
@@ -96,12 +103,22 @@ namespace CardGame.GamePlay
             };
 
         }
+        
+        public void SetCardFrontFacing()
+        {
+            NotifyCardClicked();
+            clickable.enabled = false;
+            transform.localEulerAngles = faceUpRotation;
+            CurrentFace = CardFace.frontFace;
+            NotifyCardFaceUpAnimationFinished();
+            clickable.enabled = true;
+        }
 
         void OnDisable()
         {
             clickable.OnClick -= OnCardClicked;
             NotifyCardDisableAnimationFinished();
-           // ClearListeners();
+           
         }
 
         private void NotifyCardClicked()
@@ -122,6 +139,7 @@ namespace CardGame.GamePlay
 
         private void NotifyCardFaceUpAnimationFinished()
         {
+            Debug.Log("listner count "+listeners.Count);
             foreach (var listener in listeners)
             {
                 listener.OnCardFaceUpAnimationFinished(this);

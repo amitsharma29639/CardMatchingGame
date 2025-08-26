@@ -20,6 +20,12 @@ public class TurnsManager
         Debug.Log("Turn count "+turn);
     }
 
+    public void SetTurns(int turns)
+    {
+        this.turn = turns;
+        OnTurnCountChanged(turn);
+    }
+
     public void OnDisable()
     {
         OnTurnCountChanged = delegate { };

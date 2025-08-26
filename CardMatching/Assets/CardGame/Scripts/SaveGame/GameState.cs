@@ -1,14 +1,16 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class GameState
 {
+    [SerializeField]
     public int score;
-
+    [SerializeField]
     public int turns;
-
+    [SerializeField]
     public GameGridStateData gridData;
     
     public GameState(int row, int col)

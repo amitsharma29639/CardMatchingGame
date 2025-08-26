@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 
 public class CardsGridManager : MonoBehaviour, IGameResultListner
 {
-
     private float hSpacing = 1.5f;
     private float vSpacing = 2f;
     private CardsManager cardsManager;
@@ -18,26 +17,26 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SpriteAtlas spriteAtlas;
 
-    void Start()
+    public void Init(GameConfig gameConfig)
     {
-        Init(4, 4);
-    }
-
-    public void Init(int rows, int cols)
-    {
-        cardsManager = new CardsManager(cardPrefab, transform, rows * cols, spriteAtlas);
-        
-        gameResultEvaluator = new GameResultEvaluator(cardsManager.GetCards());
-        gameResultEvaluator.AddListener(this);
-        gameResultEvaluator.AddListener(cardsManager);
+        cardsManager = new CardsManager(cardPrefab, transform, gameConfig.Rows * gameConfig.Cols, spriteAtlas);
         
         scoreManager = new ScoreManager(0);
         
         turnsManager = new TurnsManager(0);
-
-        saveAndLoadGameData = new SaveAndLoadGameData(rows, cols , cardsManager , scoreManager, turnsManager);
         
-        CreateGrid(rows, cols);
+        gameResultEvaluator = new GameResultEvaluator(cardsManager.GetCards());
+        gameResultEvaluator.AddListener(this);
+        gameResultEvaluator.AddListener(cardsManager);
+
+        saveAndLoadGameData = new SaveAndLoadGameData(gameConfig, cardsManager , scoreManager, turnsManager , gameResultEvaluator);
+        
+        CreateGrid(gameConfig.Rows, gameConfig.Cols);
+    }
+
+    public void SaveGame()
+    {
+        saveAndLoadGameData.Save();
     }
 
     private void CreateGrid(int rows, int cols)
