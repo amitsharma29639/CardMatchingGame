@@ -148,9 +148,9 @@ namespace CardGame.GamePlay
 
     public struct CardData : IEquatable<CardData>
     {
-        private int id;
-        private string suit;
-        private string rank;
+        public int id;
+        public string suit;
+        public string rank;
         private Sprite sprite;
 
         public CardData(int id, string suit, string rank, SpriteAtlas atlas)
@@ -160,13 +160,7 @@ namespace CardGame.GamePlay
             this.rank = rank;
             this.sprite = atlas.GetSprite("card_" + suit + "_" + rank);
         }
-
-        public int Id
-        { 
-            get { return id; }
-            set { id = value; }
-        }
-
+        
         public Sprite Sprite => sprite;
 
         public bool Equals(CardData other)

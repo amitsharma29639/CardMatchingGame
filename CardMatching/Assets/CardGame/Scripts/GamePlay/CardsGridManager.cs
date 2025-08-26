@@ -13,6 +13,7 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner
     private GameResultEvaluator gameResultEvaluator;
     private ScoreManager scoreManager;
     private TurnsManager turnsManager;
+    private SaveAndLoadGameData saveAndLoadGameData;
     
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SpriteAtlas spriteAtlas;
@@ -25,13 +26,18 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner
     public void Init(int rows, int cols)
     {
         cardsManager = new CardsManager(cardPrefab, transform, rows * cols, spriteAtlas);
-        CreateGrid(rows, cols);
-
+        
         gameResultEvaluator = new GameResultEvaluator(cardsManager.GetCards());
         gameResultEvaluator.AddListener(this);
         gameResultEvaluator.AddListener(cardsManager);
-        scoreManager = new ScoreManager();
-        turnsManager = new TurnsManager();
+        
+        scoreManager = new ScoreManager(0);
+        
+        turnsManager = new TurnsManager(0);
+
+        saveAndLoadGameData = new SaveAndLoadGameData(rows, cols , cardsManager , scoreManager, turnsManager);
+        
+        CreateGrid(rows, cols);
     }
 
     private void CreateGrid(int rows, int cols)
