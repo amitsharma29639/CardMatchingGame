@@ -1,10 +1,11 @@
 
+using System;
 using CardGame.GamePlay;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UIElements;
 
-public class CardsGridManager : MonoBehaviour, IGameResultListner
+public class CardsGridManager : MonoBehaviour, IGameResultListner , IHUDEventsListner
 {
     private float hSpacing = 1.5f;
     private float vSpacing = 2f;
@@ -14,20 +15,27 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner
     private TurnsManager turnsManager;
     private SaveAndLoadGameData saveAndLoadGameData;
     
+    
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SpriteAtlas spriteAtlas;
+    [SerializeField] private HUDManager hudManager;
+    
 
     public void Init(GameConfig gameConfig)
     {
         cardsManager = new CardsManager(cardPrefab, transform, gameConfig.Rows * gameConfig.Cols, spriteAtlas);
         
         scoreManager = new ScoreManager(0);
+        scoreManager.AddScoreListner(hudManager.OnScoreUpdate);
         
         turnsManager = new TurnsManager(0);
+        turnsManager.AddTurnsListner(hudManager.OnTurnsUpdate);
         
         gameResultEvaluator = new GameResultEvaluator(cardsManager.GetCards());
         gameResultEvaluator.AddListener(this);
         gameResultEvaluator.AddListener(cardsManager);
+        
+        hudManager.AddListener(this);
 
         saveAndLoadGameData = new SaveAndLoadGameData(gameConfig, cardsManager , scoreManager, turnsManager , gameResultEvaluator);
         
@@ -82,13 +90,22 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner
 
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         gameResultEvaluator.OnDisable();
-        cardsManager.OnDisable();
-        scoreManager.OnDisable();
-        turnsManager.OnDisable();
+        cardsManager.OnDestroy();
+        scoreManager.OnDestroy();
+        turnsManager.OnDestroy();
     }
 
-    
+
+    public void OnHomeBtnClicked()
+    {
+        
+    }
+
+    public void OnSaveBtnClicked()
+    {
+        saveAndLoadGameData.Save();
+    }
 }

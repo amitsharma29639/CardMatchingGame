@@ -72,7 +72,10 @@ public class CardsManager : IGameResultListner
             card.Init(cardData);
             cards.Add(cardObj);
             cardObj.SetActive(!cardState.isMatched);
-            card.CurrentFace = cardState.cardFace;
+            if (!cardState.isMatched)
+            {
+                card.CurrentFace = cardState.cardFace;
+            }
             
         }
         
@@ -133,7 +136,7 @@ public class CardsManager : IGameResultListner
         
     }
 
-    public void OnDisable()
+    public void OnDestroy()
     {
         ClearListeners();
     }

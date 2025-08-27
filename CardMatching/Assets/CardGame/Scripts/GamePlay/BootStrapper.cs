@@ -11,7 +11,7 @@ public class BootStrapper : MonoBehaviour
     private void Awake()
     {
         cardsGridManager = GetComponent<CardsGridManager>();
-        gameConfig = new GameConfig(2 , 2, true);
+        gameConfig = new GameConfig(3 , 4, true);
     }
 
     private void Start()

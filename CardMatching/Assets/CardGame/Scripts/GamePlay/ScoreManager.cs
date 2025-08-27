@@ -7,7 +7,7 @@ using UnityEngine;
 public class ScoreManager
 {
    public Action<int> OnScoreChanged = delegate { };
-   private int score = 0;
+   private int score;
 
    public ScoreManager(int score)
    {
@@ -15,6 +15,20 @@ public class ScoreManager
    }
    
    public int Score => score;
+
+   public void AddScoreListner(Action<int> listner)
+   {
+       OnScoreChanged += listner;
+   }
+
+   public void RemoveListner(Action<int> listner)
+   {
+       OnScoreChanged -= listner;
+   }
+   public void RemoveAllListner()
+   {
+       OnScoreChanged = delegate { };;
+   }
 
    public void AddScore(int amount)
    {
@@ -29,8 +43,9 @@ public class ScoreManager
        OnScoreChanged(score);
    }
 
-   public void OnDisable()
+   public void OnDestroy()
    {
        OnScoreChanged = delegate { };
+       RemoveAllListner();
    }
 }

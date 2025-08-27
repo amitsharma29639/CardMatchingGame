@@ -80,8 +80,6 @@ namespace CardGame.GamePlay
             }
         }
 
-       
-
         public void FlipCard()
         {
             clickable.enabled = false;
@@ -139,7 +137,6 @@ namespace CardGame.GamePlay
 
         private void NotifyCardFaceUpAnimationFinished()
         {
-            Debug.Log("listner count "+listeners.Count);
             foreach (var listener in listeners)
             {
                 listener.OnCardFaceUpAnimationFinished(this);

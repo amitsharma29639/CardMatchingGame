@@ -12,6 +12,21 @@ public class TurnsManager
     }
     
     public int Turn => turn;
+    
+    public void AddTurnsListner(Action<int> listner)
+    {
+        OnTurnCountChanged += listner;
+    }
+
+    public void RemoveListner(Action<int> listner)
+    {
+        OnTurnCountChanged -= listner;
+    }
+   
+    public void RemoveAllListner()
+    {
+        OnTurnCountChanged = delegate { };;
+    }
 
     public void IncreamentTurnCount()
     {
@@ -26,8 +41,8 @@ public class TurnsManager
         OnTurnCountChanged(turn);
     }
 
-    public void OnDisable()
+    public void OnDestroy()
     {
-        OnTurnCountChanged = delegate { };
+        RemoveAllListner();
     }
 }
