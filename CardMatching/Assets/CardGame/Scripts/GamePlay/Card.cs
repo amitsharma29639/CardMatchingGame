@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DG.Tweening;
 using JTools.Sound.Core;
 using JTools.Sound.Core.Constants;
@@ -104,7 +105,20 @@ namespace CardGame.GamePlay
             };
 
         }
-        
+
+        public void FlipCardForHint()
+        {
+            clickable.enabled = false;
+            DOTween.To(() => transform.localEulerAngles, x => transform.localEulerAngles = x, faceUpRotation, FLIP_DURATION).onComplete += async () =>
+            {
+                await Task.Delay(1);
+                DOTween.To(() => transform.localEulerAngles, x => transform.localEulerAngles = x, faceDownRotation, FLIP_DURATION).onComplete +=  () =>
+                {
+                    clickable.enabled = true;
+                };
+            };
+        }
+
         public void SetCardFrontFacing()
         {
             NotifyCardClicked();

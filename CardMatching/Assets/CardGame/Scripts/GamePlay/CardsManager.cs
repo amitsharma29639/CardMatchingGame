@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using CardGame.GamePlay;
 using UnityEngine;
 using UnityEngine.U2D;
-using UnityEngine.UIElements;
 
 public class CardsManager : IGameResultListner
 {
@@ -102,6 +101,18 @@ public class CardsManager : IGameResultListner
         }
 
         return deck;
+    }
+
+    public void RevealAllUnMatchedHiddenCards()
+    {
+        foreach (GameObject cardObj in cards)
+        {
+            Card card = cardObj.GetComponent<Card>();
+            if (card.CurrentFace == CardFace.backFace && cardObj.activeSelf)
+            {
+                card.FlipCardForHint();
+            }
+        }
     }
 
     public void OnResultEvaluationStarted(Card firstCard, Card secondCard)
