@@ -40,9 +40,21 @@ public class SaveAndLoadGameData
         gameState = Load();
         scoreManager.SetScore(gameState.score);
         turnsManager.SetTurns(gameState.turns);
+        PowerUpManager.Instance.Init(ConfigurePowerUps(gameState.powerCount));
         gameConfig.Rows = gameState.gridData.row;
         gameConfig.Cols = gameState.gridData.col;
         cardsManager.InstantiateFromSavedData(gameState.gridData.cardsData , evaluator);
+    }
+
+    private List<PowerUp> ConfigurePowerUps(int count)
+    {
+        List<PowerUp> powerUps = new List<PowerUp>();
+        for (int i = 0; i < count; i++)
+        {
+            powerUps.Add(new RevealAllCardsPowerUp(cardsManager));
+        }
+        
+        return powerUps;
     }
 
     public void Save()
@@ -64,6 +76,8 @@ public class SaveAndLoadGameData
         gameState.SetScore(scoreManager.Score);
         
         gameState.SetTurns(turnsManager.Turn);
+        
+        gameState.SetPowerCount(PowerUpManager.Instance.PowerUpCount);
         
         string jsonData = JsonUtility.ToJson(gameState);
         

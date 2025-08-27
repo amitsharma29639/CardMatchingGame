@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using CardGame.GamePlay;
 using JTools.Sound.Core;
 using JTools.Sound.Core.Constants;
@@ -15,7 +16,6 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner , IHUDEventsLi
     private ScoreManager scoreManager;
     private TurnsManager turnsManager;
     private SaveAndLoadGameData saveAndLoadGameData;
-    
     
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SpriteAtlas spriteAtlas;
@@ -44,18 +44,21 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner , IHUDEventsLi
         popup.Init();
         popup.AddListener(this);
         
-        hudManager.AddListener(this);
+        List<PowerUp> powerUps = new List<PowerUp>();
+        for (int i = 0; i < 3; i++)
+        {
+            powerUps.Add(new RevealAllCardsPowerUp(cardsManager));
+        }
+        PowerUpManager.Instance.Init(powerUps);
 
         saveAndLoadGameData = new SaveAndLoadGameData(gameConfig, cardsManager , scoreManager, turnsManager , gameResultEvaluator);
         
+        hudManager.AddListener(this);
+        hudManager.UpdatePowerUpCount();
+        
         CreateGrid(gameConfig.Rows, gameConfig.Cols);
     }
-
-    public void SaveGame()
-    {
-        saveAndLoadGameData.Save();
-    }
-
+    
     private void CreateGrid(int rows, int cols)
     {
         float gridWidth = (cols - 1) * hSpacing;
@@ -130,6 +133,11 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner , IHUDEventsLi
     public void OnSaveBtnClicked()
     {
         saveAndLoadGameData.Save();
+    }
+
+    public void OnClickPowerUp()
+    {
+        PowerUpManager.Instance.ActivatePowerUp();
     }
 
     public void OnClickHomeButton()

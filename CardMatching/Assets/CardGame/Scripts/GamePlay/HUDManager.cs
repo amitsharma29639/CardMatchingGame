@@ -14,6 +14,8 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI turnsText;
     [SerializeField] private Button saveGameBtn;
     [SerializeField] private Button homeBtn;
+    [SerializeField] private Button powerUpBtn;
+    [SerializeField] private TextMeshProUGUI powerUpCountText;
 
     private List<IHUDEventsListner> listners;
 
@@ -21,8 +23,24 @@ public class HUDManager : MonoBehaviour
     {
         saveGameBtn.onClick.AddListener(OnClickSaveBtn);
         homeBtn.onClick.AddListener(OnClickHomeBtn);
+        powerUpBtn.onClick.AddListener(OnClickPowerUpBtn);
         listners = new List<IHUDEventsListner>();
     }
+    private void OnClickPowerUpBtn()
+    {
+        foreach (var listener in listners)
+        {
+            listener.OnClickPowerUp();
+        }
+        
+       UpdatePowerUpCount();
+    }
+
+    public void UpdatePowerUpCount()
+    {
+        powerUpCountText.text = PowerUpManager.Instance.PowerUpCount.ToString();
+    }
+
 
     private void OnClickHomeBtn()
     {
@@ -78,4 +96,5 @@ public interface IHUDEventsListner
 {
     void OnHomeBtnClicked();
     void OnSaveBtnClicked();
+    void OnClickPowerUp();
 }

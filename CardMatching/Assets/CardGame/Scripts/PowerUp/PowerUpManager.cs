@@ -17,13 +17,24 @@ public class PowerUpManager : MonoBehaviour
         Instance = this;
     }
 
-    public void ActivatePowerUp(PowerUp powerUp)
+    public void Init(List<PowerUp> powerUps)
     {
-        activePowerUps.Add(powerUp);
-        powerUp.Activate();
+        this.activePowerUps = powerUps;
     }
 
-    public void DeactivatePowerUp(PowerUp powerUp)
+    public void ActivatePowerUp()
+    {
+        if (activePowerUps.Count <= 0)
+        {
+            return;
+        }
+
+        PowerUp powerUp = activePowerUps[0];
+        powerUp.Activate();
+        DeactivatePowerUp(powerUp);
+    }
+
+    private void DeactivatePowerUp(PowerUp powerUp)
     {
         if (activePowerUps.Contains(powerUp))
         {
@@ -31,4 +42,6 @@ public class PowerUpManager : MonoBehaviour
             activePowerUps.Remove(powerUp);
         }
     }
+    
+    public int PowerUpCount => activePowerUps.Count;
 }

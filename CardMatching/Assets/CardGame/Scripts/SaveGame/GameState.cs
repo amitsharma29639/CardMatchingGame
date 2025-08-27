@@ -10,6 +10,10 @@ public class GameState
     public int score;
     [SerializeField]
     public int turns;
+
+    [SerializeField] 
+    public int powerCount;
+    
     [SerializeField]
     public GameGridStateData gridData;
     
@@ -31,6 +35,11 @@ public class GameState
     public void SetTurns(int turns)
     {
         this.turns = turns;
+    }
+
+    public void SetPowerCount(int powerCount)
+    {
+        this.powerCount = powerCount;
     }
 
 }
