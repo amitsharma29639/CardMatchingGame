@@ -629,6 +629,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 56557333}
     m_Modifications:
+    - target: {fileID: 1245712738882203553, guid: ef54decac9e4144d6ba862a080a0cfcf, type: 3}
+      propertyPath: m_Color.a
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 1245712739179696681, guid: ef54decac9e4144d6ba862a080a0cfcf, type: 3}
+      propertyPath: m_Color.a
+      value: 0.5019608
+      objectReference: {fileID: 0}
     - target: {fileID: 1245712739620922118, guid: ef54decac9e4144d6ba862a080a0cfcf, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -716,10 +724,6 @@ PrefabInstance:
     - target: {fileID: 1245712739620922119, guid: ef54decac9e4144d6ba862a080a0cfcf, type: 3}
       propertyPath: m_Name
       value: UICanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 1245712739620922123, guid: ef54decac9e4144d6ba862a080a0cfcf, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef54decac9e4144d6ba862a080a0cfcf, type: 3}

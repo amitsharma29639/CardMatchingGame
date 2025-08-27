@@ -22,11 +22,11 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void PushScreen(UIScreen screen)
     {
-        if (screenStack.Count > 0)
-        {
-            // Optionally hide current screen
-            screenStack.Peek().Hide();
-        }
+        // if (screenStack.Count > 0)
+        // {
+        //     // Optionally hide current screen
+        //     screenStack.Peek().Hide();
+        // }
 
         screenStack.Push(screen);
         screen.Show();

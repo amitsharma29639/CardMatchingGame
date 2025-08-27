@@ -56,14 +56,11 @@ public class StartGame : MonoBehaviour, IHomeScreenEventsListner
         }
         
     }
-
     public void OnPlayButtonClicked()
     {
         cardGridObj = GameObject.Instantiate(gamePlayPrefab , transform);
         CardsGridManager manager = cardGridObj.GetComponent<CardsGridManager>();
         manager.Init(config);
-        
-        UIManager.Instance.PopScreen();
     }
 
     public void OnToggleValueChanged(bool isOn)

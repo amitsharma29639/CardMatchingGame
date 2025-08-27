@@ -1,5 +1,7 @@
 
+using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using JTools.Sound.Core;
 using JTools.Sound.Core.Constants;
 using UnityEngine;
@@ -7,6 +9,14 @@ using UnityEngine.UI;
 
 public class GameCompletePopup : UIScreen
 {
+    private Vector2 originalPos;
+    private RectTransform rectTransform;
+    private void Awake()
+    {
+        rectTransform = ((RectTransform)transform);
+        originalPos = rectTransform.anchoredPosition;
+    }
+
     [SerializeField] private Button homeBtn;
     private List<IGameCompletePopupEventListner> listners;
     
@@ -32,16 +42,16 @@ public class GameCompletePopup : UIScreen
         }
     }
 
-
-    protected override void OnShow()
+    public override void Show()
     {
-        Debug.Log("Game complete popup Opened");
-    }
+        base.Show();
+        rectTransform.anchoredPosition = new Vector2(originalPos.x, Screen.height);
 
-    public override bool OnBackPressed()
-    {
-        Debug.Log("Game complete back press");
-        return false; 
+        // Animate into center
+        rectTransform.DOAnchorPos(originalPos, 0.5f)
+            .SetEase(Ease.InBack)
+            .OnComplete(() => Debug.Log("✅ Popup Arrived at Center"));
+        
     }
 
     private void OnDestroy()

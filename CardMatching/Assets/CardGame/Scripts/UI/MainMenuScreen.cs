@@ -1,7 +1,7 @@
 
 using System.Collections.Generic;
 using System.IO;
-
+using DG.Tweening;
 using JTools.Sound.Core;
 using JTools.Sound.Core.Constants;
 using TMPro;
@@ -16,6 +16,7 @@ public class MainMenuScreen : UIScreen
 
     [SerializeField] private Button playBtn;
     [SerializeField] private Toggle playSavedGame;
+    [SerializeField] private Image fadeImage;
 
     private List<IHomeScreenEventsListner> listners;
     public void Init()
@@ -48,11 +49,21 @@ public class MainMenuScreen : UIScreen
                 return;
             }
         }
-
-        foreach (var listner in listners)
+        
+        fadeImage.gameObject.SetActive(true);
+        Sequence seq = DOTween.Sequence();
+       
+        seq.Append(fadeImage.DOFade(1f, 0.5f).OnComplete(() =>
         {
-            listner.OnPlayButtonClicked();
-        }
+            foreach (var listner in listners)
+            {
+                listner.OnPlayButtonClicked();
+            }
+
+            fadeImage.color = new Color(0, 0, 0, 0);
+            fadeImage.gameObject.SetActive(false);
+            UIManager.Instance.PopScreen();
+        }));
     }
 
     private void OnToggleValueChanged(bool isOn)
