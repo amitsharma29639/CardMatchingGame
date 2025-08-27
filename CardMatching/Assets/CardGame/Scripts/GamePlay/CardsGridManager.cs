@@ -1,6 +1,8 @@
 
 using System;
 using CardGame.GamePlay;
+using JTools.Sound.Core;
+using JTools.Sound.Core.Constants;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UIElements;
@@ -19,7 +21,11 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner , IHUDEventsLi
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SpriteAtlas spriteAtlas;
     [SerializeField] private HUDManager hudManager;
-    
+
+    private void OnEnable()
+    {
+        AudioManager.Instance.Play(AudioGroupConstants.BGM_LOOP , AudioGroupConstants.BGM_LOOP, AudioGroupConstants.GAMEPLAYSFX);
+    }
 
     public void Init(GameConfig gameConfig)
     {
@@ -88,6 +94,11 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner , IHUDEventsLi
     public void OnGameFinished()
     {
 
+    }
+    
+    private void OnDisable()
+    {
+        AudioManager.Instance.Stop(AudioGroupConstants.BGM_LOOP );
     }
 
     void OnDestroy()

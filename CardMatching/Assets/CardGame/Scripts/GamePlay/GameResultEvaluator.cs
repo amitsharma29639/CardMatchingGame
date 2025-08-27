@@ -1,6 +1,8 @@
 
 using System.Collections.Generic;
 using CardGame.GamePlay;
+using JTools.Sound.Core;
+using JTools.Sound.Core.Constants;
 using UnityEngine;
 
 public class GameResultEvaluator : ICardEventsListner
@@ -68,17 +70,20 @@ public class GameResultEvaluator : ICardEventsListner
     {
         if (firstRevealedCard.GetCardData().Equals(secondRevealedCard.GetCardData()))
         {
+            AudioManager.Instance.PlayOneShot(AudioGroupConstants.GAMEPLAYSFX , AudioGroupConstants.MATCHED, AudioGroupConstants.GAMEPLAYSFX);
             await System.Threading.Tasks.Task.Delay(200); // Small delay to show the second card
             Debug.Log("Match Found!");
             NotifyMatchFound(firstRevealedCard, secondRevealedCard);
             if (CheckForGameFinish())
             {
+                AudioManager.Instance.PlayOneShot(AudioGroupConstants.GAMEPLAYSFX , AudioGroupConstants.GAME_COMPLETE, AudioGroupConstants.GAMEPLAYSFX);
                 await System.Threading.Tasks.Task.Delay(200);
                 NotifyGameFinished();
             }
         }
         else
         {
+            AudioManager.Instance.PlayOneShot(AudioGroupConstants.GAMEPLAYSFX , AudioGroupConstants.WRONG_MATCH, AudioGroupConstants.GAMEPLAYSFX);
             await System.Threading.Tasks.Task.Delay(400);
             Debug.Log("No Match. Hiding cards again.");
             NotifyNoMatch(firstRevealedCard, secondRevealedCard);

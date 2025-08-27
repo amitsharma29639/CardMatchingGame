@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JTools.Sound.Core;
+using JTools.Sound.Core.Constants;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,6 +26,7 @@ public class HUDManager : MonoBehaviour
 
     private void OnClickHomeBtn()
     {
+        AudioManager.Instance.PlayOneShot(AudioGroupConstants.GAMEPLAYSFX , AudioGroupConstants.BUTTON_CLICK, AudioGroupConstants.GAMEPLAYSFX);
         foreach (var listener in listners)
         {
             listener.OnHomeBtnClicked();
@@ -32,6 +35,7 @@ public class HUDManager : MonoBehaviour
 
     private void OnClickSaveBtn()
     {
+        AudioManager.Instance.PlayOneShot(AudioGroupConstants.GAMEPLAYSFX , AudioGroupConstants.BUTTON_CLICK, AudioGroupConstants.GAMEPLAYSFX);
         foreach (var listener in listners)
         {
             listener.OnSaveBtnClicked();

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using JTools.Sound.Core;
+using JTools.Sound.Core.Constants;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -75,6 +77,7 @@ namespace CardGame.GamePlay
            
             if (currentFace == CardFace.backFace)
             {
+                AudioManager.Instance.PlayOneShot(AudioGroupConstants.GAMEPLAYSFX , AudioGroupConstants.FLIP, AudioGroupConstants.GAMEPLAYSFX);
                 NotifyCardClicked();
                 FlipCard();
             }
