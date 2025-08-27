@@ -47,6 +47,7 @@ public class SaveAndLoadGameData
 
     public void Save()
     {
+        Debug.Log("game saved");
         List<CardStateData> cardsData = new List<CardStateData>();
         List<GameObject> cards = cardsManager.GetCards();
         foreach (GameObject cardObj in cards)

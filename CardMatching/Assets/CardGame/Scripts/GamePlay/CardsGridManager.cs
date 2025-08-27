@@ -1,13 +1,12 @@
 
-using System;
 using CardGame.GamePlay;
 using JTools.Sound.Core;
 using JTools.Sound.Core.Constants;
 using UnityEngine;
 using UnityEngine.U2D;
-using UnityEngine.UIElements;
 
-public class CardsGridManager : MonoBehaviour, IGameResultListner , IHUDEventsListner
+
+public class CardsGridManager : MonoBehaviour, IGameResultListner , IHUDEventsListner , IGameCompletePopupEventListner
 {
     private float hSpacing = 1.5f;
     private float vSpacing = 2f;
@@ -40,6 +39,10 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner , IHUDEventsLi
         gameResultEvaluator = new GameResultEvaluator(cardsManager.GetCards());
         gameResultEvaluator.AddListener(this);
         gameResultEvaluator.AddListener(cardsManager);
+
+        GameCompletePopup popup = (GameCompletePopup) UiScreenFactory.Instance.GetUIScreen(Constants.GAME_COMPLETE_POPUP);
+        popup.Init();
+        popup.AddListener(this);
         
         hudManager.AddListener(this);
 
@@ -93,12 +96,20 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner , IHUDEventsLi
 
     public void OnGameFinished()
     {
-
+       UIManager.Instance.PushScreen(UiScreenFactory.Instance.GetUIScreen(Constants.GAME_COMPLETE_POPUP));
     }
     
     private void OnDisable()
     {
-        AudioManager.Instance.Stop(AudioGroupConstants.BGM_LOOP );
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.Stop(AudioGroupConstants.BGM_LOOP );
+        }
+    }
+
+    private void DestroyGame()
+    {
+        GameObject.Destroy(gameObject);
     }
 
     void OnDestroy()
@@ -112,11 +123,17 @@ public class CardsGridManager : MonoBehaviour, IGameResultListner , IHUDEventsLi
 
     public void OnHomeBtnClicked()
     {
-        
+        UIManager.Instance.PushScreen(UiScreenFactory.Instance.GetUIScreen(Constants.HOME_SCREEN));
+        DestroyGame();
     }
 
     public void OnSaveBtnClicked()
     {
         saveAndLoadGameData.Save();
+    }
+
+    public void OnClickHomeButton()
+    {
+        DestroyGame();
     }
 }

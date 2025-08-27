@@ -3,7 +3,19 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance { get; private set; }
     private Stack<UIScreen> screenStack = new Stack<UIScreen>();
+    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); // Ensure only one exists
+            return;
+        }
+
+        Instance = this;
+    }
 
     /// <summary>
     /// Show a new screen and push it on the stack

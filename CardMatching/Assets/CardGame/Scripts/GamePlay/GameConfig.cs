@@ -7,20 +7,21 @@ public class GameConfig
 
     private bool loadSavedGame;
 
-    public GameConfig(int rows, int cols, bool loadSavedGame)
+    public GameConfig()
     {
-        this.rows = rows;
-        this.cols = cols;
-        this.loadSavedGame = loadSavedGame;
+        this.rows = 2;
+        this.cols = 2;
+        this.loadSavedGame = false;
+    }
 
-        if (loadSavedGame)
+    public bool LoadSavedGame
+    {
+        get { return loadSavedGame; }
+        set
         {
-            rows = -1;
-            cols = -1;
+            loadSavedGame = value;
         }
     }
-    
-    public bool LoadSavedGame => loadSavedGame;
 
     public int Rows
     {

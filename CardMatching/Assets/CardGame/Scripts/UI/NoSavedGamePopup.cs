@@ -1,3 +1,5 @@
+using JTools.Sound.Core;
+using JTools.Sound.Core.Constants;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +16,8 @@ public class NoSavedGamePopup : UIScreen
 
     private void OnHomeButtonClicked()
     {
-      
+        AudioManager.Instance.PlayOneShot(AudioGroupConstants.GAMEPLAYSFX , AudioGroupConstants.BUTTON_CLICK, AudioGroupConstants.GAMEPLAYSFX);
+        UIManager.Instance.PopScreen();
     }
 
 

@@ -24,6 +24,19 @@ public class Constants
     private const string RANK_JACK = "J";
     private const string RANK_QUENN = "Q";
     private const string RANK_KING = "K";
+    
+    // screen ids
+
+    public const int HOME_SCREEN = 0;
+    
+    public const int GAME_COMPLETE_POPUP = 1;
+    
+    public const int NO_SAVED_GAME_POPUP = 2;
+    
+    public const int EMPTY_SCREEN = 3;
+    
+    
+    
 
     public static readonly List<string> SUITS = new List<string>
     {
