@@ -1,13 +1,35 @@
 using System.Collections.Generic;
+
+/// <summary>
+/// Contains constant values and collections used throughout the card game,
+/// including card suits, ranks, and screen identifiers.
+/// </summary>
 public class Constants
 {
-    // card suits
+    #region Card Suits
+
+    // Card suit names
     private const string SUIT_HEARTS = "hearts";
     private const string SUIT_DIAMONDS = "diamonds";
     private const string SUIT_CLUBS = "clubs";
     private const string SUIT_SPADES = "spades";
 
-    // card ranks
+    /// <summary>
+    /// List of all card suits.
+    /// </summary>
+    public static readonly List<string> SUITS = new List<string>
+    {
+        SUIT_HEARTS,
+        SUIT_DIAMONDS,
+        SUIT_CLUBS,
+        SUIT_SPADES
+    };
+
+    #endregion
+
+    #region Card Ranks
+
+    // Card rank names
     private const string RANK_ACE = "A";
     private const string RANK_2 = "02";
     private const string RANK_3 = "03";
@@ -21,23 +43,10 @@ public class Constants
     private const string RANK_JACK = "J";
     private const string RANK_QUENN = "Q";
     private const string RANK_KING = "K";
-    
-    // screen ids
 
-    public const int HOME_SCREEN = 0;
-    
-    public const int GAME_COMPLETE_POPUP = 1;
-    
-    public const int NO_SAVED_GAME_POPUP = 2;
-    
-    public static readonly List<string> SUITS = new List<string>
-    {
-        SUIT_HEARTS,
-        SUIT_DIAMONDS,
-        SUIT_CLUBS,
-        SUIT_SPADES
-    };
-
+    /// <summary>
+    /// List of all card ranks.
+    /// </summary>
     public static readonly List<string> RANKS = new List<string>
     {
         RANK_ACE,
@@ -54,4 +63,25 @@ public class Constants
         RANK_QUENN,
         RANK_KING
     };
+
+    #endregion
+
+    #region Screen Identifiers
+
+    /// <summary>
+    /// Screen ID for the home screen.
+    /// </summary>
+    public const int HOME_SCREEN = 0;
+
+    /// <summary>
+    /// Screen ID for the game complete popup.
+    /// </summary>
+    public const int GAME_COMPLETE_POPUP = 1;
+
+    /// <summary>
+    /// Screen ID for the no saved game popup.
+    /// </summary>
+    public const int NO_SAVED_GAME_POPUP = 2;
+
+    #endregion
 }

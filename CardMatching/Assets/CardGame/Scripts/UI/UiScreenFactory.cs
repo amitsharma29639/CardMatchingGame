@@ -1,22 +1,45 @@
 using UnityEngine;
+
+/// <summary>
+/// Factory class to provide references to UIScreens by ID.
+/// Implements a singleton pattern.
+/// </summary>
 public class UiScreenFactory : MonoBehaviour
 {
-    public static UiScreenFactory Instance { get; private set; }
-    [SerializeField] private MainMenuScreen homeScreen;
-    [SerializeField] private GameCompletePopup gameCompletePopup;
-    [SerializeField] private NoSavedGamePopup noSavedGamePopup;
-    
+    #region Singleton
+
+    public static UiScreenFactory Instance { get; private set; } // Singleton instance
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); // Ensure only one exists
+            Destroy(gameObject); // Ensure only one factory exists
             return;
         }
 
         Instance = this;
     }
 
+    #endregion
+
+
+    #region Serialized Fields
+
+    [SerializeField] private MainMenuScreen homeScreen;         // Reference to the Home screen
+    [SerializeField] private GameCompletePopup gameCompletePopup; // Reference to Game Complete popup
+    [SerializeField] private NoSavedGamePopup noSavedGamePopup;   // Reference to No Saved Game popup
+
+    #endregion
+
+
+    #region Public Methods
+
+    /// <summary>
+    /// Returns a UIScreen instance based on the provided ID.
+    /// </summary>
+    /// <param name="id">The screen ID defined in <see cref="Constants"/>.</param>
+    /// <returns>The UIScreen instance if found; otherwise null.</returns>
     public UIScreen GetUIScreen(int id)
     {
         switch (id)
@@ -27,8 +50,10 @@ public class UiScreenFactory : MonoBehaviour
                 return gameCompletePopup;
             case Constants.NO_SAVED_GAME_POPUP:
                 return noSavedGamePopup;
+            default:
+                return null;
         }
-
-        return null;
     }
+
+    #endregion
 }
