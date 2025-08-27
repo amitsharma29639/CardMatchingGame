@@ -2,8 +2,6 @@ using UnityEngine;
 
 public abstract class UIScreen : MonoBehaviour
 {
-    [SerializeField] private GameObject root; // Assign main screen root in inspector
-
     public bool IsVisible => gameObject.activeSelf;
 
     public virtual void Show()
