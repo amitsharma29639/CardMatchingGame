@@ -1,7 +1,4 @@
-
-
 using System.Collections.Generic;
-
 public class Constants
 {
     // card suits
@@ -33,11 +30,6 @@ public class Constants
     
     public const int NO_SAVED_GAME_POPUP = 2;
     
-    public const int EMPTY_SCREEN = 3;
-    
-    
-    
-
     public static readonly List<string> SUITS = new List<string>
     {
         SUIT_HEARTS,
@@ -62,8 +54,4 @@ public class Constants
         RANK_QUENN,
         RANK_KING
     };
-
-   
-
-   
 }

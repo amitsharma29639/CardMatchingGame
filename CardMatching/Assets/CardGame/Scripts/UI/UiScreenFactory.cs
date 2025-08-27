@@ -1,13 +1,10 @@
-
 using UnityEngine;
-
 public class UiScreenFactory : MonoBehaviour
 {
     public static UiScreenFactory Instance { get; private set; }
     [SerializeField] private MainMenuScreen homeScreen;
     [SerializeField] private GameCompletePopup gameCompletePopup;
     [SerializeField] private NoSavedGamePopup noSavedGamePopup;
-    [SerializeField] private EmptyUiScreen emptyUiScreen;
     
     private void Awake()
     {
@@ -30,8 +27,6 @@ public class UiScreenFactory : MonoBehaviour
                 return gameCompletePopup;
             case Constants.NO_SAVED_GAME_POPUP:
                 return noSavedGamePopup;
-            case Constants.EMPTY_SCREEN:
-                return emptyUiScreen;
         }
 
         return null;

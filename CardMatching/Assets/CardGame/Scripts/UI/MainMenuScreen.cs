@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using DG.Tweening;
-using JTools.Sound.Core;
-using JTools.Sound.Core.Constants;
 using TMPro;
 using UnityEngine;
 

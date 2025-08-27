@@ -1,8 +1,6 @@
 
 using System.Collections.Generic;
 using CardGame.GamePlay;
-using JTools.Sound.Core;
-using JTools.Sound.Core.Constants;
 using UnityEngine;
 
 public class GameResultEvaluator : ICardEventsListner

@@ -1,11 +1,8 @@
 
 using System.Collections.Generic;
 using CardGame.GamePlay;
-using JTools.Sound.Core;
-using JTools.Sound.Core.Constants;
 using UnityEngine;
 using UnityEngine.U2D;
-
 
 public class CardsGridManager : MonoBehaviour, IGameResultListner , IHUDEventsListner , IGameCompletePopupEventListner
 {

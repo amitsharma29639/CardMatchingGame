@@ -1,5 +1,4 @@
-namespace JTools.Sound.Core.Constants
-{
+
     public class AudioGroupConstants
     {
 
@@ -14,4 +13,3 @@ namespace JTools.Sound.Core.Constants
         public const string BGM_LOOP = "BGMLoop";
 
     }
-}

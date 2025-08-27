@@ -1,9 +1,6 @@
 using DG.Tweening;
-using JTools.Sound.Core;
-using JTools.Sound.Core.Constants;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class NoSavedGamePopup : UIScreen
 {
     [SerializeField] private Button homeBtn;

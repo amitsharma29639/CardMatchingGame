@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using JTools.Sound.Core;
-using JTools.Sound.Core.Constants;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour

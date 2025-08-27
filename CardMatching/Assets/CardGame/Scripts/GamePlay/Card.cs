@@ -1,16 +1,12 @@
-
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DG.Tweening;
-using JTools.Sound.Core;
-using JTools.Sound.Core.Constants;
 using UnityEngine;
 using UnityEngine.U2D;
 
 namespace CardGame.GamePlay
 {
-
     [RequireComponent(typeof(ClickableObject))]
     public class Card : MonoBehaviour
     {

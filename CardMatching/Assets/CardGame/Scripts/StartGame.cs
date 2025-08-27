@@ -1,8 +1,4 @@
-
-
-using System;
 using UnityEngine;
-
 public class StartGame : MonoBehaviour, IHomeScreenEventsListner
 {
 
@@ -10,15 +6,14 @@ public class StartGame : MonoBehaviour, IHomeScreenEventsListner
 
     private GameObject cardGridObj;
 
-    private GameConfig config;
-
-    private void Awake()
-    {
-        config = new GameConfig();
-    }
+    private int rows;
+    private int cols;
+    private bool isOn;
 
     private void Start()
     {
+        rows = 2;
+        cols = 2;
         MainMenuScreen screen = (MainMenuScreen)UiScreenFactory.Instance.GetUIScreen(Constants.HOME_SCREEN);
         screen.Init();
         screen.AddListner(this);
@@ -30,41 +25,44 @@ public class StartGame : MonoBehaviour, IHomeScreenEventsListner
         switch (value)
         {
           case 0:
-              config.Rows = 2;
-              config.Cols = 2;
+              rows = 2;
+              cols = 2;
               break;
           case 1:
-              config.Rows = 2;
-              config.Cols = 3;
+              rows = 2;
+              cols = 3;
               break;
           case 2:
-              config.Rows = 3;
-              config.Cols = 4;
+              rows = 3;
+              cols = 4;
               break;
           case 3:
-              config.Rows = 3;
-              config.Cols = 6;
+              rows = 3;
+              cols = 6;
               break;
           case 4:
-              config.Rows = 4;
-              config.Cols = 4;
+              rows = 4;
+              cols = 4;
               break;
           case 5:
-              config.Rows = 4;
-              config.Cols = 6;
+              rows = 4;
+              cols = 6;
               break;
         }
-        
     }
     public void OnPlayButtonClicked()
     {
         cardGridObj = GameObject.Instantiate(gamePlayPrefab , transform);
         CardsGridManager manager = cardGridObj.GetComponent<CardsGridManager>();
+        GameConfig config = new GameConfig();
+        config.Rows = rows;
+        config.Cols = cols;
+        config.LoadSavedGame = isOn;
+        
         manager.Init(config);
     }
-
     public void OnToggleValueChanged(bool isOn)
     {
-        config.LoadSavedGame = isOn;
+        this.isOn = isOn;
     }
 }
